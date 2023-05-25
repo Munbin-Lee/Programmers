@@ -11,7 +11,7 @@ struct Node {
 };
 
 int nodeCnt;
-Node nodes[2000099];
+Node nodes[2000000];
 
 Node* createNode() {
     auto pNode = &nodes[nodeCnt++];
