@@ -1,12 +1,11 @@
-#include <string>
-#include <vector>
 #include <iostream>
+#include <vector>
 #include <sstream>
 #include <set>
 
 using namespace std;
 
-set<int> st;
+multiset<int> st;
 
 void processOperation(string& operation) {
     istringstream sin(operation);
