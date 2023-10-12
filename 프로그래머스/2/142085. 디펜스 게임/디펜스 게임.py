@@ -5,20 +5,20 @@ def solution(n, k, enemy):
     
     while True:
         mid = (left + right)//2
-        
+
         if left>right:
             break
             
         now_enemy = sorted(enemy[:mid])
-        
-        for _ in range(k):
-            if now_enemy:
-                now_enemy.pop()
+
+#         for _ in range(k):
+#             if now_enemy:
+#                 now_enemy.pop()
                 
-            else:
-                break
-            
-        temp = sum(now_enemy)
+#             else:
+#                 break
+
+        temp = sum(now_enemy[:-k])
         
         if temp > n :
             right = mid-1
@@ -27,5 +27,6 @@ def solution(n, k, enemy):
             left = mid+1
             
         else:
-            return end
+            return mid
+    
     return mid
