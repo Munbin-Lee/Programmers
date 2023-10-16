@@ -1,6 +1,6 @@
 # [level 2] 혼자 놀기의 달인 - 131130 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131130?language=python3) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/131130?language=cpp) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2023년 10월 1일 14:40:45
+2023년 10월 1일 14:41:12
 
 ### 문제 설명
 
