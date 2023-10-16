@@ -14,6 +14,6 @@ def solution(cards):
         a = bit_count(visited)
         for j in range(len(cards)):
             visited2 = dfs(j, visited)
-            b = bit_count(visited2) - a
+            b = bit_count(visited2 - visited)
             answer = max(answer, a * b)
     return answer
