@@ -14,7 +14,6 @@ vector<int> solution(vector<string> gems) {
     }
     
     int gemTypes = map.size();
-    
     int lo = 0;
     int hi = -1;
     int currentGemTypes = 0;
@@ -49,7 +48,7 @@ vector<int> solution(vector<string> gems) {
                 currentGemTypes--;
                 break;
             }
-            if (lo >= hi) break;
+            // if (lo >= hi) break;
         }
     }
     
