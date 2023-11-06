@@ -1,26 +1,34 @@
-from collections import deque
-
 def solution(name):
-    cnt = 0
-    targets = 0
-    for idx, ch in enumerate(name):
-        up = ord(ch) - ord('A')
-        down = ord('Z') + 1 - ord(ch)
-        dist = min(up, down)
-        if dist == 0: continue
-        cnt += dist
-        targets |= (1 << idx)
+    answer = 0
+    n = len(name)
+
+    def alphabet_to_num(char):
+        num_char = [i for i in range(14)] + [j for j in range(12, 0, -1)]
+        return num_char[ord(char) - ord('A')]
+
+    for ch in name:
+        answer += alphabet_to_num(ch)
+
+    move = n - 1
+    for idx in range(n):
+        next_idx = idx + 1
+        while (next_idx < n) and (name[next_idx] == 'A'):
+            next_idx += 1
+        distance = min(idx, n - next_idx)
+        move = min(move, idx + n - next_idx + distance)
+
+    answer += move
+    return answer
+
+
+# def solution(name):
+#     answer = 0
     
-    deq = deque([[0, 0, targets]])
-    while deq:
-        _cnt, pos, _targets = deq.popleft()
-        _targets -= (_targets & (1 << pos))
-        if _targets == 0: return cnt + _cnt
-        left = pos - 1
-        if left == -1: left = len(name) - 1
-        deq.append([_cnt + 1, left, _targets])
-        
-        right = pos + 1
-        if right == len(name): right = 0
-        deq.append([_cnt + 1, right, _targets])
-    return -1
+#     for ch in name:
+#         if ch == 'A': continue
+#         answer += min(
+#             ord(ch) - ord('A'),
+#             ord('Z') + 1 - ord(ch)
+#         )
+    
+#     return answer
