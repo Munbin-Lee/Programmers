@@ -1,34 +1,26 @@
+from collections import deque
+
 def solution(name):
-    answer = 0
     n = len(name)
-
-    def alphabet_to_num(char):
-        num_char = [i for i in range(14)] + [j for j in range(12, 0, -1)]
-        return num_char[ord(char) - ord('A')]
-
-    for ch in name:
-        answer += alphabet_to_num(ch)
-
-    move = n - 1
-    for idx in range(n):
-        next_idx = idx + 1
-        while (next_idx < n) and (name[next_idx] == 'A'):
-            next_idx += 1
-        distance = min(idx, n - next_idx)
-        move = min(move, idx + n - next_idx + distance)
-
-    answer += move
-    return answer
-
-
-# def solution(name):
-#     answer = 0
+    answer = 0
+    flag = 0
     
-#     for ch in name:
-#         if ch == 'A': continue
-#         answer += min(
-#             ord(ch) - ord('A'),
-#             ord('Z') + 1 - ord(ch)
-#         )
+    # 각 알파벳을 A로 만들기
+    for idx, ch in enumerate(name):
+        if ch == 'A': continue
+        answer += min(
+            ord(ch) - ord('A'),
+            ord('Z') + 1 - ord(ch)
+        )
+        flag |= (1 << idx)
     
-#     return answer
+    # 현재 위치, 이동 횟수, 방문 필요 여부
+    deq = deque([[0, 0, flag]])
+    
+    # BFS로 좌우 이동 횟수를 구함
+    while deq:
+        pos, cnt, nextFlag = deq.popleft()
+        nextFlag &= ~(1 << pos)
+        if nextFlag == 0: return answer + cnt
+        deq.append([(pos + 1) % n, cnt + 1, nextFlag])
+        deq.append([(pos - 1 + n) % n, cnt + 1, nextFlag])
