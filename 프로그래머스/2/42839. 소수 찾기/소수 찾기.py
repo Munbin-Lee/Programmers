@@ -2,10 +2,10 @@ from itertools import permutations
 
 def solution(numbers):
     answer = []                                  
-    nums = [n for n in numbers]                  
+    # nums = [n for n in numbers]                  
     per = []                                      
     for i in range(1, len(numbers)+1):            
-        per += list(permutations(nums, i))        
+        per += list(permutations(numbers, i))        
     new_nums = [int(("").join(p)) for p in per]  
 
     for n in new_nums:                          
