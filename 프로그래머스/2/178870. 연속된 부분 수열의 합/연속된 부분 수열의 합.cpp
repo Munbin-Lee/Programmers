@@ -3,40 +3,45 @@
 
 using namespace std;
 
+bool comp(const vector<int>& a, const vector<int>& b)
+{
+    return a < b;
+}
 vector<int> solution(vector<int> sequence, int k) {
-    int n = sequence.size();
-    int lo = 0;
-    int hi = 0;
-    int cur = sequence[0];
-    int minDist = 987654321;
     vector<int> answer;
-    
-    while (true) {
-        if (cur == k) {
-            int dist = hi - lo + 1;
-            if (dist < minDist) {
-                minDist = dist;
-                answer = {lo, hi};
+
+    const int n = sequence.size();
+
+    vector<int> accum(n+1,0);
+    for(int i = 0; i < n; ++i)
+    {
+        accum[i+1] = accum[i] + sequence[i];
+    }
+
+    vector<int> best{n+1,n+1,n+1};
+    for(int e = n; e >= 0; --e)
+    {
+        auto it = lower_bound(accum.begin(),accum.begin() + e, accum[e] - k);
+        if( accum[e] - *it == k)
+        {
+            int s = it - accum.begin();
+            const int diff = accum[e] - accum[s];
+            if(diff == k)
+            {
+                if ((e-s < best[0]) || (e-s == best[0] && s < best[1]))
+                {
+                    best = {e-s,s,e-1};
+                }
+
             }
-            cur -= sequence[lo];
-            lo++;
-            if (++hi == n) break;
-            cur += sequence[hi];
-            continue;
-        }
-        
-        if (cur < k) {
-            if (++hi == n) break;
-            cur += sequence[hi];
-            continue;
-        }
-        
-        if (cur > k) {
-            cur -= sequence[lo];
-            lo++;
-            continue;
+            else if(diff > k)
+            {
+                break;
+            }
         }
     }
-    
+
+    answer = {best[1],best[2]};
+
     return answer;
 }
