@@ -1,25 +1,18 @@
-def solve(babbling):
-    i = 0
-    prev = ""
+def solution(babbling):
+    speak = ["aya","ye","woo","ma"]
+    answer= 0 
     
-    while i < len(babbling):
-        visited = False
-        for word in ("aya", "ye", "woo", "ma"):
-            if word == prev: continue
-            if not babbling[i:].startswith(word): continue
-            visited = True
-            i += len(word)
-            prev = word
-            break
+    for x in babbling:
+        for y in speak:
+            if y*2 in x:
+                break
+            x = x.replace(y," ")
         
-        if not visited: return 0
-    
-    return 1
+        else:
+            x= x.strip()
+            
+            if len(x) == 0 :
+                answer += 1
+                
 
-def solution(babblings):
-    answer = 0
-    
-    for babbling in babblings:
-        answer += solve(babbling)
-    
     return answer
