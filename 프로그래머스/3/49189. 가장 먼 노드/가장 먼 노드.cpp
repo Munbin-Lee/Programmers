@@ -5,8 +5,6 @@
 using namespace std;
 using pr = pair<int, int>;
 
-constexpr int INF = 987654321;
-
 int solution(int n, vector<vector<int>> edges) {
     vector<vector<int>> paths(n + 1);
     
@@ -17,8 +15,8 @@ int solution(int n, vector<vector<int>> edges) {
         paths[b].emplace_back(a);
     }
     
-    vector<int> dists(n + 1, INF);
-    dists[1] = 0;
+    vector<bool> visited(n + 1);
+    visited[1] = true;
     
     queue<pr> q;
     q.emplace(0, 1);
@@ -30,17 +28,17 @@ int solution(int n, vector<vector<int>> edges) {
         auto [dist, cur] = q.front();
         q.pop();
         
+        if (dist > maxDist) {
+            maxDist = dist;
+            answer = 1;
+        } else if (dist == maxDist) {
+            answer++;
+        }
+        
         for (int next : paths[cur]) {
-            int ndist = dist + 1;
-            if (ndist >= dists[next]) continue;
-            if (ndist > maxDist) {
-                maxDist = ndist;
-                answer = 1;
-            } else if (ndist == maxDist) {
-                answer++;
-            }
-            dists[next] = ndist;
-            q.emplace(ndist, next);
+            if (visited[next]) continue;
+            visited[next] = true;
+            q.emplace(dist + 1, next);
         }
     }
     
